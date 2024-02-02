@@ -10,7 +10,7 @@
 
 const char* ssid = STASSID;
 const char* password = STAPSK;
-const int allowRemoteGpio[3] = { 12, 13, 15 };
+const int allowRemoteGpio[5] = { 12, 13, 14, 15, 16 };
 const String deviceName = "DEV_1";
 WebSocketsClient webSocket;
 
@@ -124,10 +124,14 @@ void setup() {
   pinMode(12, OUTPUT);  //D6
   pinMode(13, OUTPUT);  //D7
   pinMode(15, OUTPUT);  //D8
+  pinMode(14, OUTPUT);  //D5
+  pinMode(16, OUTPUT);  //D0
 
   digitalWrite(12, HIGH);  //D6
   digitalWrite(13, HIGH);  //D7
   digitalWrite(15, HIGH);  //D8
+  digitalWrite(14 HIGH);  //D5
+  digitalWrite(16, HIGH);  //D0
 
   Serial.println();
   Serial.print("Connecting to ");
