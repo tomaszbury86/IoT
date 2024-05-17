@@ -124,8 +124,8 @@
             else if (json.Command == "SWITCH_GPIO_DONE") {
                 var id = json.Args.split(':')[0];
                 if (json.Args.split(':')[1] == 0) {
-                    $('#' + id).removeClass("btn-secondary");
-                    $('#' + id).addClass("btn-primary");
+                    $('#' + id).removeClass("btn-primary");
+                    $('#' + id).addClass("btn-secondary");
                 }
                 else {
                     $('#' + id).addClass("btn-primary");
