@@ -86,11 +86,27 @@
                 var newButtons = '';
                 for (var i = 0; i < gpio.length; i++) {
                     if (gpio[i] != '') {
-                        newButtons += '<div class="col-12-lg"><button onClick="buttonClickSwith(' + gpio[i] + ')" id="' + gpio[i] + '" class="btn btn-secondary">' + gpio[i] + '</button></div>';
+                        var label = '';
+                        if (gpio[i] == 15) {
+                            label = 'Gniazdo 1';
+                        }
+                        else if (gpio[i] == 13) {
+                            label = 'Gniazdo 2';
+                        }
+                        else if (gpio[i] == 12) {
+                            label = 'Gniazdo 3';
+                        }
+                        else if (gpio[i] == 14) {
+                            label = 'Gniazdo 4';
+                        }
+                        else if (gpio[i] == 16) {
+                            label = 'Gniazdo 5';
+                        }
+                        newButtons += '<div class="col-12-lg"><button onClick="buttonClickSwith(' + gpio[i] + ')" id="' + gpio[i] + '" class="btn btn-primary">' + label + '</button></div>';
                     }
                 }
-                newButtons += '<div class="col-12-lg"><button onClick="buttonClickOn()" id="On" class="btn btn-success">OFF</button></div>';
-                newButtons += '<div class="col-12-lg"><button onClick="buttonClickOff()" id="Off" class="btn btn-danger">ON</button></div>';
+                newButtons += '<div class="col-12-lg"><button onClick="buttonClickOn()" id="Off" class="btn btn-danger">OFF</button></div>';
+                newButtons += '<div class="col-12-lg"><button onClick="buttonClickOff()" id="On" class="btn btn-success">ON</button></div>';
 
                 buttons.innerHTML = newButtons;
                 info.hidden = true;
@@ -98,11 +114,11 @@
             else if (json.Command == "SWITCH_LED_DONE") {
                 if (json.Args == "0:1") {
                     $("#led").removeClass("btn-secondary");
-                    $("#led").addClass("btn-success");
+                    $("#led").addClass("btn-primary");
                 }
                 else {
-                    $("#led").addClass("btn-secondary");
-                    $("#led").removeClass("btn-success");
+                    $("#led").addClass("btn-primary");
+                    $("#led").removeClass("btn-secondary");
                 }
             }
             else if (json.Command == "SWITCH_GPIO_DONE") {
@@ -112,30 +128,30 @@
                     $('#' + id).addClass("btn-primary");
                 }
                 else {
-                    $('#' + id).addClass("btn-secondary");
-                    $('#' + id).removeClass("btn-primary");
+                    $('#' + id).addClass("btn-primary");
+                    $('#' + id).removeClass("btn-secondary");
                 }
             }
             else if (json.Command == "ON_GPIO_DONE") {
                 var id = json.Args.split(':')[0];
                 if (json.Args.split(':')[1] == 0) {
-                    $('#' + id).removeClass("btn-secondary");
-                    $('#' + id).addClass("btn-primary");
+                    $('#' + id).removeClass("btn-primary");
+                    $('#' + id).addClass("btn-secondary");
                 }
                 else {
-                    $('#' + id).addClass("btn-secondary");
-                    $('#' + id).removeClass("btn-primary");
+                    $('#' + id).addClass("btn-primary");
+                    $('#' + id).removeClass("btn-secondary");
                 }
             }
             else if (json.Command == "OFF_GPIO_DONE") {
                 var id = json.Args.split(':')[0];
                 if (json.Args.split(':')[1] == 0) {
-                    $('#' + id).removeClass("btn-secondary");
-                    $('#' + id).addClass("btn-primary");
+                    $('#' + id).removeClass("btn-primary");
+                    $('#' + id).addClass("btn-secondary");
                 }
                 else {
-                    $('#' + id).addClass("btn-secondary");
-                    $('#' + id).removeClass("btn-primary");
+                    $('#' + id).addClass("btn-primary");
+                    $('#' + id).removeClass("btn-secondary");
                 }
             }
             else if (json.Command = "UNREGISTER_NODE_MCU") {
