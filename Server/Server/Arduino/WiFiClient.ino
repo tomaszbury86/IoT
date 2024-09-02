@@ -4,8 +4,8 @@
 
 
 #ifndef STASSID
-#define STASSID ""
-#define STAPSK ""
+#define STASSID "iot"
+#define STAPSK "12345678"
 #endif
 
 const char* ssid = STASSID;
@@ -94,8 +94,24 @@ void execute(uint8_t* payload) {
   Serial.print("[Socket] Send: ");
   Serial.println(response);
   webSocket.sendTXT(response);
+  blink();
 }
 
+void blink()
+{
+  digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(2, HIGH);
+  delay(100);
+  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(2, LOW);
+  delay(200);    
+  digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(2, HIGH);
+  delay(100);
+  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(2, LOW);
+  delay(200);  
+}
 // void onSocketConnected() {
 //   while (!manualLedMode) {
 //     digitalWrite(LED_BUILTIN, LOW);
@@ -110,16 +126,16 @@ void execute(uint8_t* payload) {
 // }
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
 
-  //pinMode(LED_BUILTIN, OUTPUT);
-  //digitalWrite(LED_BUILTIN, HIGH);
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
 
   //pinMode(16, OUTPUT);  //D0
   //pinMode(5, OUTPUT);   //D1
   //pinMode(4, OUTPUT);   //D2
   //pinMode(0, OUTPUT);   //D3
-  //pinMode(2, OUTPUT);   //D4
+  pinMode(2, OUTPUT);   //D4 LED
   //pinMode(14, OUTPUT);  //D5
   pinMode(12, OUTPUT);  //D6
   pinMode(13, OUTPUT);  //D7
@@ -130,7 +146,7 @@ void setup() {
   digitalWrite(12, HIGH);  //D6
   digitalWrite(13, HIGH);  //D7
   digitalWrite(15, HIGH);  //D8
-  digitalWrite(14 HIGH);  //D5
+  digitalWrite(14, HIGH);  //D5
   digitalWrite(16, HIGH);  //D0
 
   Serial.println();
@@ -143,14 +159,14 @@ void setup() {
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
+    blink();
   }
-
   Serial.println("");
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 
-  webSocket.beginSSL("hub-iot.azurewebsites.net", 443, "/ws");
+  webSocket.beginSSL("iot-dev.azurewebsites.net", 443, "/ws");
   webSocket.onEvent(webSocketEvent);
 }
 
